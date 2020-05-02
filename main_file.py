@@ -24,10 +24,11 @@ def about():
     return render_template('about.html', title='Tutorials')
 
 @app.route('/register', methods=["GET", "POST"])
-def Register():
+def register():
     form = RegistrationForm()
-    # flash : is a module in flask to send a signal (alert) to make sure the user logged in successfully
-    if form.validate_on_submit():
+    # flash : is a module in flask to send a signal (alert or feedback) to make sure the user logged in successfully
+
+    if form.validate_on_submit(): # this tell us if our form validated after submited
         flash(f'Account created successfully for { form.username.data }!', 'success')
         # the second arg is called a category : 'success' this is for bootstraps to know what class of alert
         # after login redirect function sends the user the a specific page ( in this case homepage)
@@ -35,10 +36,10 @@ def Register():
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/login', methods=["GET", "POST"])
-def Login():
+def login():
     form = LoginForm()
     return render_template('login.html', title='login', form=form)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     app.run(debug=True)
