@@ -3,8 +3,8 @@ from forms_and_requests import LoginForm, RegistrationForm
 
 app = Flask(__name__)
 
-# a secret key to protect from cookies and fake requests
-# an easy way to generate a big random number is:
+# a secret key for session protection
+# an easy way to generate a random number in python is:
 #   >>> import secrets
 #   >>> secrets.token_hex(16)
 #   >>> exit()
@@ -33,11 +33,18 @@ def register():
         # the second arg is called a category : 'success' this is for bootstraps to know what class of alert
         # after login redirect function sends the user the a specific page ( in this case homepage)
         return redirect(url_for('homepage'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title='register', form=form)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        # simulate a fake user
+        if form.email.data == "admin@blog.com" and form.password.data =="123456":
+            flash("you have been logged in ", "success")
+            return redirect(url_for('homepage'))
+        else:
+            flash("unsuccessful, please try again ", "danger")
     return render_template('login.html', title='login', form=form)
 
 
