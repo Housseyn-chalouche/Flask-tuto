@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block content%}
+{% block content %}
     {% for post in posts %}
         <h2> {{ post.title }} </h2>
         <p> by {{ post.author }} on {{ post.added_time }}</p>
